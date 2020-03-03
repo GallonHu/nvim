@@ -1,0 +1,44 @@
+snippet main "main function snippet"
+func main() {
+	$0
+}
+endsnippet
+
+
+snippet err "check error"
+if err != nil {
+	${1:statement}
+}
+${0}
+endsnippet
+
+
+snippet pt "fmt.Print"
+fmt.Printf("${0:format}\n", ${1:vars})
+endsnippet
+
+
+snippet test "test file snippet"
+package ${1:package name}
+
+import (
+	"testing"
+
+	"github.com/stretchr/testify/assert"
+)
+
+func TestOK(t *testing.T) {
+	assert := assert.New(t)
+
+	var tests = []struct {
+		${2:your test struct}
+	}{
+		${3:your test example}
+	}
+
+	for _, test := range tests {
+		assert.Equal(${4:expected}, ${5:actual}, ${6:"they should be equal"})
+	}
+}
+${0}
+endsnippet

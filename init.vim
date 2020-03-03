@@ -306,7 +306,7 @@ noremap tm= :+tabmove<CR>
 " Other useful stuff
 " ===============
 " Source nvim
-noremap <Leader>rc :source $HOME/.config/nvim/init.vim<CR>
+noremap <Leader>rc :e $HOME/.config/nvim/init.vim<CR>
 
 
 " Open a terminal window
@@ -374,6 +374,7 @@ Plug 'xolox/vim-misc' " vim-session dep
 " Plug 'liuchengxu/eleline.vim'
 Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'edkolev/tmuxline.vim'
 Plug 'majutsushi/tagbar'
 "Plug 'liuchengxu/space-vim-theme'
 "Plug 'morhetz/gruvbox'
@@ -440,7 +441,7 @@ Plug 'plytophogy/vim-virtualenv', { 'for' :['python', 'vim-plug'] }
 Plug 'tweekmonster/braceless.vim'
 
 " Markdown
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install_sync() }, 'for' :['markdown', 'vim-plug'] }
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install' }
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
 Plug 'theniceboy/bullets.vim'
 
@@ -451,6 +452,7 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'scrooloose/nerdcommenter' " in <space>cn to comment a line
 Plug 'AndrewRadev/switch.vim' " gs to switch
 Plug 'tpope/vim-surround' " type yskw' to wrap the word with '' or type cs'` to change 'word' to `word`
+Plug 'tpope/vim-repeat'
 Plug 'gcmt/wildfire.vim' " in Visual mode, type k' to select all text in '', or type k) k] k} kp
 Plug 'junegunn/vim-easy-align' " gaip= to align the = in paragraph, 
 Plug 'tpope/vim-capslock'	" Ctrl+L (insert) to toggle capslock
@@ -509,6 +511,9 @@ call plug#end()
 " ==============================
 " Plugin Settings
 " ==============================
+filetype plugin on
+
+
 " ===============
 " Dressup
 " ===============
@@ -561,7 +566,7 @@ hi NonText ctermfg=gray guifg=grey10
 let g:airline_theme='deus'
 
 let g:airline_powerline_fonts = 1
-let g:airline_extensions = ['tabline', 'virtualenv', 'vista', 'branch']
+let g:airline_extensions = ['tabline', 'virtualenv', 'branch', 'coc']
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extension#tabline#show_splits = 1
 let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
@@ -575,14 +580,31 @@ let g:airline#extensions#tabline#fnamemod = ':p:t'
 let g:airline#extensions#hunks#enabled = 1
 
 let g:airline#extensions#virtualenv#enabled = 1
-let g:airline#extensions#vista#enabled = 1
 let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#coc#enabled = 1
 
 let g:airline_detect_modified=1
 let g:airline_detect_paste=1
 let g:airline_detect_crypt=1
 let g:airline_highlighting_cache = 1
 let g:airline#extensions#tabline#show_tab_type = 1
+
+
+" ===============
+" Tmuxline
+" ===============
+let g:tmuxline_preset = {
+      \'a'    : '#S',
+      \'win'  : ['#I', '#W'],
+      \'cwin' : ['#I', '#W', '#F'],
+      \'y'    : ['%R', '%a', '%Y'],
+      \'z'    : '#H'}
+
+
+" ===============
+" Vim-repeat
+" ===============
+silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
 
 
 " ===============
@@ -600,12 +622,21 @@ nnoremap <LEADER>g= :GitGutterNextHunk<CR>
 
 
 " ===============
+" Nerdcommenter
+" ===============
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 0
+
+
+" ===============
 " Coc
 " ===============
 " fix the most annoying bug that coc has
 silent! au BufEnter,BufRead,BufNewFile * silent! unmap if
 
-let g:coc_global_extensions = ['coc-python', 'coc-vimlsp', 'coc-html', 'coc-json', 'coc-css', 'coc-tsserver', 'coc-yank', 'coc-lists', 'coc-gitignore', 'coc-vimlsp', 'coc-tailwindcss', 'coc-stylelint', 'coc-tslint', 'coc-lists', 'coc-git', 'coc-explorer', 'coc-pyright', 'coc-sourcekit', 'coc-translator', 'coc-kite']
+let g:coc_global_extensions = ['coc-python', 'coc-tabnine', 'coc-vimlsp', 'coc-html', 'coc-json', 'coc-css', 'coc-tsserver', 'coc-yank', 'coc-lists', 'coc-gitignore', 'coc-vimlsp', 'coc-tailwindcss', 'coc-stylelint', 'coc-tslint', 'coc-lists', 'coc-git', 'coc-explorer', 'coc-pyright', 'coc-sourcekit', 'coc-translator']
 
 " use <tab> for trigger completion and navigate to the next complete item
 inoremap <silent><expr> <Tab>
@@ -619,8 +650,10 @@ function! s:check_back_space() abort
 endfunction
 
 
-" Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
+" " Use <c-space> to trigger completion.
+" inoremap <silent><expr> <c-space> coc#refresh()
+" inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : 
+                                           " \"\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " Useful commands
 nnoremap <silent> <space>y :<C-u>CocList -A --normal yank<cr>
@@ -640,6 +673,7 @@ noremap tc :CocCommand todolist.clearNotice<CR>
 noremap tc :CocCommand todolist.clearNotice<CR>
 noremap tl :CocList --normal todolist<CR>
 
+
 " coc-translator
 nmap ts <Plug>(coc-translator-p)
 
@@ -650,14 +684,19 @@ command! Markmap CocCommand markmap.create
 " ===============
 " MarkdownPreview
 " ===============
+function! g:Open_chrome_in_new_window(url)
+    silent exe 'silent !open -na "Chrome" --args --new-window ' . a:url
+endfunction
+
+let g:mkdp_browserfunc='g:Open_firefox_in_new_window'
 let g:mkdp_auto_start = 0
 let g:mkdp_auto_close = 1
 let g:mkdp_refresh_slow = 0
 let g:mkdp_command_for_global = 0
 let g:mkdp_open_to_the_world = 0
 let g:mkdp_open_ip = ''
-let g:mkdp_echo_preview_url = 0
-let g:mkdp_browserfunc = ''
+let g:mkdp_echo_preview_url = 1
+let g:mkdp_browserfunc = 'g:Open_chrome_in_new_window'
 let g:mkdp_preview_options = {
 			\ 'mkit': {},
 			\ 'katex': {},
@@ -764,7 +803,7 @@ let g:bookmark_location_list = 1
 " ===============
 " Undotree
 " ===============
-noremap T :UndotreeToggle<CR>
+noremap <> :UndotreeToggle<CR>
 let g:undotree_DiffAutoOpen = 1
 let g:undotree_SetFocusWhenToggle = 1
 let g:undotree_ShortIndicators = 1
