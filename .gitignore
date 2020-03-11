@@ -3,4 +3,4 @@ tmp/
 
 .DS_Store
 _machine_specific.vim
-
+.netrwhist
