@@ -77,9 +77,9 @@ au BufRead,BufNewFile *.py set shiftwidth=4 tabstop=4 softtabstop=4 expandtab sm
 
 
 " Display unprintable chars
-" set list
-" set listchars=tab:\|\ ,trail:▫
-" set showbreak=↪
+set list
+set listchars=tab:\|\ ,trail:▫
+set showbreak=↪
 
 " Text display settings
 set linebreak
@@ -306,7 +306,7 @@ noremap tm= :+tabmove<CR>
 " Other useful stuff
 " ===============
 " Source nvim
-noremap <Leader>rc :e $HOME/.config/nvim/init.vim<CR>
+noremap <Leader>rc :source $HOME/.config/nvim/init.vim<CR>
 
 
 " Open a terminal window
@@ -387,12 +387,6 @@ Plug 'ajmwagar/vim-deus'
 " Genreal Highlighter
 Plug 'jaxbot/semantic-highlight.vim'
 Plug 'chrisbra/Colorizer' " Show colors with :ColorHighlight
-
-" File navigation
-Plug 'junegunn/fzf.vim'
-"Plug 'yuki-ycino/fzf-preview.vim'
-Plug 'junegunn/fzf', {'dir': '~/.config/fzf', 'do': './install --all'}
-Plug 'francoiscabrol/ranger.vim'
 
 " Taglist
 Plug 'liuchengxu/vista.vim'
@@ -480,7 +474,6 @@ Plug 'lambdalisue/suda.vim' " do stuff like :SudoWrite
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'kana/vim-textobj-user'
 Plug 'roxma/nvim-yarp'
-Plug 'rbgrouleff/bclose.vim' " For ranger.vim
 
 call plug#end()
 
@@ -688,64 +681,6 @@ noremap <Leader>tm :TableModeToggle<CR>
 
 
 " ===============
-" FZF
-" ===============
-noremap <C-f> :FZF<CR>
-noremap <C-a> :Ag<CR>
-noremap <C-h> :MRU<CR>
-noremap <C-t> :BTags<CR>
-noremap <C-l> :LinesWithPreview<CR>
-noremap <C-w> :Buffers<CR>
-"noremap ; :History:<CR>
-
-" This is the default extra key bindings
-let g:fzf_action = {
-            \ 'ctrl-t': 'tab split',
-            \ 'ctrl-x': 'split',
-            \ 'ctrl-v': 'vsplit' }
-
-autocmd! FileType fzf
-" autocmd  FileType fzf set laststatus=0 noruler
-"   \| autocmd BufLeave <buffer> set laststatus=2 ruler
-
-command! -bang -nargs=* Buffers
-            \ call fzf#vim#buffers(
-            \   '',
-            \   <bang>0 ? fzf#vim#with_preview('up:60%')
-            \           : fzf#vim#with_preview('right:0%', '?'),
-            \   <bang>0)
-
-
-command! -bang -nargs=* LinesWithPreview
-            \ call fzf#vim#grep(
-            \   'rg --with-filename --column --line-number --no-heading --color=always --smart-case . '.fnameescape(expand('%')), 1,
-            \   fzf#vim#with_preview({}, 'up:50%', '?'),
-            \   1)
-
-command! -bang -nargs=* Ag
-            \ call fzf#vim#ag(
-            \   '',
-            \   <bang>0 ? fzf#vim#with_preview('up:60%')
-            \           : fzf#vim#with_preview('right:50%', '?'),
-            \   <bang>0)
-
-
-command! -bang -nargs=* MRU call fzf#vim#history(fzf#vim#with_preview())
-
-command! -bang BTags
-            \ call fzf#vim#buffer_tags('', {
-            \     'down': '40%',
-            \     'options': '--with-nth 1
-            \                 --reverse
-            \                 --prompt "> "
-            \                 --preview-window="70%"
-            \                 --preview "
-            \                     tail -n +\$(echo {3} | tr -d \";\\\"\") {2} |
-            \                     head -n 16"'
-            \ })
-
-
-" ===============
 " Vim-bookmarks
 " ===============
 let g:bookmark_no_default_key_mappings = 1
@@ -818,7 +753,7 @@ let g:bullets_enabled_file_types = [
 noremap <silent> <Leader>v :Vista!!<CR>
 let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
 let g:vista_default_executive = 'ctags'
-let g:vista_fzf_preview = ['right:50%']
+" let g:vista_fzf_preview = ['right:50%']
 let g:vista#renderer#enable_icon = 1
 let g:vista#renderer#icons = {
             \   "function": "\uf794",
@@ -829,19 +764,6 @@ function! NearestMethodOrFunction() abort
 endfunction
 set statusline+=%{NearestMethodOrFunction()}
 autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
-
-
-" ===============
-" Ranger.vim
-" ===============
-let g:ranger_map_keys = 0
-nnoremap <Leader>f :Ranger<CR>
-
-
-" ===============
-" Fzf-gitignore
-" ===============
-noremap <Leader>gi :FzfGitignore<CR>
 
 
 " ===============

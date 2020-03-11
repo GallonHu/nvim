@@ -7,14 +7,15 @@ endsnippet
 
 snippet err "check error"
 if err != nil {
-	${1:statement}
+	${1:log.Panic(err)}
 }
 ${0}
 endsnippet
 
 
 snippet pt "fmt.Print"
-fmt.Printf("${0:format}\n", ${1:vars})
+fmt.Printf("${1:format}\n", ${2:vars})
+${0}
 endsnippet
 
 
