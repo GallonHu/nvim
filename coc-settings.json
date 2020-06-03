@@ -57,10 +57,10 @@
 	"list.nextKeymap": "<C-j>",
 	"list.previousKeymap": "<C-k>",
 	"coc.preferences.formatOnSaveFiletypes": [
-		"javascript",
-		"html",
-		"css",
-		"python"
+		"python",
+        "rust",
+        "go",
+        "java",
 	],
 	"signature.target": "echo",
 	"signature.enable": true,
@@ -81,9 +81,8 @@
 	"explorer.file.showHiddenFiles": true,
 	"explorer.icon.enableNerdfont": true,
 	"explorer.file.column.git.showIgnored": true,
-	"explorer.keyMappingMode": "none",
 	"explorer.keyMappings": {
-        "i": "unmap",
+        "i": "false",
         "k": "nodePrev",
         "j": "nodeNext",
         "gk": "expandablePrev",
@@ -161,18 +160,9 @@
 	"git.topRemovedSign.text": "▔",
 	"git.changeRemovedSign.text": "▒",
 	"git.enableGlobalStatus": false,
-	"tslint.autoFixOnSave": true,
-	"python.autoComplete.addBrackets": true,
-	"python.jediEnabled": false,
-	"python.formatting.provider": "yapf",
-	"python.venvPath": "~/.virtualenvs",
 	"html.format.enable": true,
-	"javascript.referencesCodeLens.enable": true,
-	"javascript.showUnused": true,
-	"javascript.suggest.names": true,
-	"javascript.suggestionActions.enabled": true,
 	"json.format.enable": true,
-	"languageserver": {
+    "languageserver": {
 		"lua": {
 			"command": "lua-lsp",
 			"filetypes": ["lua"]
@@ -202,7 +192,75 @@
 					 "directory": ".ccls-cache"
 				 }
 			 }
-		}
-	}
+		},
+        "python": {
+            "command": "python",
+            "args": [
+              "-mpyls",
+              "-vv",
+              "--log-file",
+              "/tmp/lsp_python.log"
+            ],
+            "trace.server": "verbose",
+            "filetypes": [
+              "python"
+            ],
+            "settings": {
+              "pyls": {
+                "enable": true,
+                "trace": {
+                  "server": "verbose"
+                },
+                "commandPath": "",
+                "configurationSources": [
+                  "pycodestyle"
+                ],
+                "plugins": {
+                  "jedi_completion": {
+                    "enabled": true
+                  },
+                  "jedi_hover": {
+                    "enabled": true
+                  },
+                  "jedi_references": {
+                    "enabled": true
+                  },
+                  "jedi_signature_help": {
+                    "enabled": true
+                  },
+                  "jedi_symbols": {
+                    "enabled": true,
+                    "all_scopes": true
+                  },
+                  "mccabe": {
+                    "enabled": true,
+                    "threshold": 15
+                  },
+                  "preload": {
+                    "enabled": true
+                  },
+                  "pycodestyle": {
+                    "enabled": true
+                  },
+                  "pydocstyle": {
+                    "enabled": false,
+                    "match": "(?!test_).*\\.py",
+                    "matchDir": "[^\\.].*"
+                  },
+                  "pyflakes": {
+                    "enabled": true
+                  },
+                  "rope_completion": {
+                    "enabled": true
+                  },
+                  "yapf": {
+                    "enabled": true
+                  }
+                }
+              }
+            }
+          }
+  },
+  "java.format.settings.url": "/Users/gallon/.config/coc/extensions/node_modules/redhat.java/eclipse-formatter.xml"
 }
 

@@ -419,17 +419,20 @@ Plug 'elzr/vim-json'
 " Go
 Plug 'fatih/vim-go' , { 'for': ['go', 'vim-plug'], 'tag': '*' }
 
+" Rust
+Plug 'rust-lang/rust.vim'
+
 " Python
 Plug 'tmhedberg/SimpylFold', { 'for' :['python', 'vim-plug'] }
-Plug 'Vimjas/vim-python-pep8-indent', { 'for' :['python', 'vim-plug'] }
-Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins', 'for' :['python', 'vim-plug'] }
-Plug 'plytophogy/vim-virtualenv', { 'for' :['python', 'vim-plug'] }
 Plug 'tweekmonster/braceless.vim'
 
 " Markdown
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install' }
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
 Plug 'theniceboy/bullets.vim'
+
+" Latex
+Plug 'lervag/vimtex'
 
 " Editor Enhancement
 "Plug 'Raimondi/delimitMate'
@@ -469,6 +472,7 @@ Plug 'luochen1990/rainbow'
 
 " Other useful utilities
 Plug 'lambdalisue/suda.vim' " do stuff like :SudoWrite
+Plug 'wakatime/vim-wakatime'
 
 " Dependencies
 Plug 'MarcWeber/vim-addon-mw-utils'
@@ -603,7 +607,7 @@ let g:floaterm_keymap_toggle = '<F10>'
 " fix the most annoying bug that coc has
 silent! au BufEnter,BufRead,BufNewFile * silent! unmap if
 
-let g:coc_global_extensions = ['coc-python', 'coc-tabnine', 'coc-vimlsp', 'coc-html', 'coc-json', 'coc-css', 'coc-tsserver', 'coc-yank', 'coc-lists', 'coc-gitignore', 'coc-stylelint', 'coc-git', 'coc-explorer', 'coc-pyright', 'coc-sourcekit', 'coc-translator']
+let g:coc_global_extensions = ['coc-vimlsp', 'coc-python', 'coc-java', 'coc-rls','coc-texlab' , 'coc-json', 'coc-yank', 'coc-gitignore', 'coc-git', 'coc-explorer']
 
 " use <tab> for trigger completion and navigate to the next complete item
 inoremap <silent><expr> <Tab>
@@ -672,6 +676,28 @@ let g:mkdp_highlight_css = ''
 let g:mkdp_port = ''
 let g:mkdp_page_title = '「${name}」'
 let vim_markdown_preview_hotkey='<C-p>'
+
+
+" ===============
+" Latex
+" ===============
+let g:tex_flavor='latex'
+
+" 阅读器相关的配置 包含正反向查找功能 仅供参考
+let g:vimtex_view_general_viewer = 'skim'
+let g:vimtex_view_general_options_latexmk = '-reuse-instance'
+let g:vimtex_view_general_options
+\ = '-reuse-instance -forward-search @tex @line @pdf'
+\ . ' -inverse-search "' . exepath(v:progpath)
+\ . ' --servername ' . v:servername
+\ . ' --remote-send \"^<C-\^>^<C-n^>'
+\ . ':execute ''drop '' . fnameescape(''\%f'')^<CR^>'
+\ . ':\%l^<CR^>:normal\! zzzv^<CR^>'
+\ . ':call remote_foreground('''.v:servername.''')^<CR^>^<CR^>\""'
+
+set conceallevel=1
+let g:tex_conceal='abdmg'
+" let g:vimtex_quickfix_mode=0
 
 
 " ===============
@@ -822,45 +848,45 @@ nnoremap \f :Autoformat<CR>
 " ===============
 " OmniSharp
 " ===============
-let g:OmniSharp_typeLookupInPreview = 1
-let g:omnicomplete_fetch_full_documentation = 1
+" let g:OmniSharp_typeLookupInPreview = 1
+" let g:omnicomplete_fetch_full_documentation = 1
 
-let g:OmniSharp_server_use_mono = 1
-let g:OmniSharp_server_stdio = 1
-let g:OmniSharp_highlight_types = 2
-let g:OmniSharp_selector_ui = 'ctrlp'
+" let g:OmniSharp_server_use_mono = 1
+" let g:OmniSharp_server_stdio = 1
+" let g:OmniSharp_highlight_types = 2
+" let g:OmniSharp_selector_ui = 'ctrlp'
 
-autocmd Filetype cs nnoremap <buffer> gd :OmniSharpPreviewDefinition<CR>
-autocmd Filetype cs nnoremap <buffer> gr :OmniSharpFindUsages<CR>
-autocmd Filetype cs nnoremap <buffer> gy :OmniSharpTypeLookup<CR>
-autocmd Filetype cs nnoremap <buffer> ga :OmniSharpGetCodeActions<CR>
-autocmd Filetype cs nnoremap <buffer> <LEADER>rn :OmniSharpRename<CR><C-N>:res +5<CR>
+" autocmd Filetype cs nnoremap <buffer> gd :OmniSharpPreviewDefinition<CR>
+" autocmd Filetype cs nnoremap <buffer> gr :OmniSharpFindUsages<CR>
+" autocmd Filetype cs nnoremap <buffer> gy :OmniSharpTypeLookup<CR>
+" autocmd Filetype cs nnoremap <buffer> ga :OmniSharpGetCodeActions<CR>
+" autocmd Filetype cs nnoremap <buffer> <LEADER>rn :OmniSharpRename<CR><C-N>:res +5<CR>
 
-sign define OmniSharpCodeActions text=💡
+" sign define OmniSharpCodeActions text=💡
 
-augroup OSCountCodeActions
-    autocmd!
-    autocmd FileType cs set signcolumn=yes
-    autocmd CursorHold *.cs call OSCountCodeActions()
-augroup END
+" augroup OSCountCodeActions
+    " autocmd!
+    " autocmd FileType cs set signcolumn=yes
+    " autocmd CursorHold *.cs call OSCountCodeActions()
+" augroup END
 
-function! OSCountCodeActions() abort
-    if bufname('%') ==# '' || OmniSharp#FugitiveCheck() | return | endif
-    if !OmniSharp#IsServerRunning() | return | endif
-    let opts = {
-                \ 'CallbackCount': function('s:CBReturnCount'),
-                \ 'CallbackCleanup': {-> execute('sign unplace 99')}
-                \}
-    call OmniSharp#CountCodeActions(opts)
-endfunction
+" function! OSCountCodeActions() abort
+    " if bufname('%') ==# '' || OmniSharp#FugitiveCheck() | return | endif
+    " if !OmniSharp#IsServerRunning() | return | endif
+    " let opts = {
+                " \ 'CallbackCount': function('s:CBReturnCount'),
+                " \ 'CallbackCleanup': {-> execute('sign unplace 99')}
+                " \}
+    " call OmniSharp#CountCodeActions(opts)
+" endfunction
 
-function! s:CBReturnCount(count) abort
-    if a:count
-        let l = getpos('.')[1]
-        let f = expand('%:p')
-        execute ':sign place 99 line='.l.' name=OmniSharpCodeActions file='.f
-    endif
-endfunction
+" function! s:CBReturnCount(count) abort
+    " if a:count
+        " let l = getpos('.')[1]
+        " let f = expand('%:p')
+        " execute ':sign place 99 line='.l.' name=OmniSharpCodeActions file='.f
+    " endif
+" endfunction
 
 
 " ===============
