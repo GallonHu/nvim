@@ -406,16 +406,6 @@ Plug 'mbbill/undotree'
 " Git
 Plug 'airblade/vim-gitgutter'
 
-" HTML, CSS, JavaScript, PHP, JSON, etc.
-Plug 'elzr/vim-json'
-" Plug 'hail2u/vim-css3-syntax', { 'for': ['vim-plug', 'php', 'html', 'javascript', 'css', 'less'] }
-" Plug 'spf13/PIV', { 'for' :['php', 'vim-plug'] }
-" Plug 'pangloss/vim-javascript', { 'for': ['vim-plug', 'php', 'html', 'javascript', 'css', 'less'] }
-" Plug 'yuezk/vim-js', { 'for': ['vim-plug', 'php', 'html', 'javascript', 'css', 'less'] }
-" Plug 'MaxMEllon/vim-jsx-pretty', { 'for': ['vim-plug', 'php', 'html', 'javascript', 'css', 'less'] }
-" Plug 'jelera/vim-javascript-syntax', { 'for': ['vim-plug', 'php', 'html', 'javascript', 'css', 'less'] }
-"Plug 'jaxbot/browserlink.vim'
-
 " Go
 Plug 'fatih/vim-go' , { 'for': ['go', 'vim-plug'], 'tag': '*' }
 
@@ -431,9 +421,6 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install' }
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
 Plug 'theniceboy/bullets.vim'
 
-" Latex
-Plug 'lervag/vimtex'
-
 " Editor Enhancement
 "Plug 'Raimondi/delimitMate'
 Plug 'jiangmiao/auto-pairs'
@@ -448,6 +435,7 @@ Plug 'tpope/vim-capslock'   " Ctrl+L (insert) to toggle capslock
 Plug 'easymotion/vim-easymotion'
 Plug 'machakann/vim-highlightedyank'
 Plug 'Konfekt/FastFold'
+Plug 'christoomey/vim-tmux-navigator'
 
 " Formatter
 Plug 'Chiel92/vim-autoformat'
@@ -607,7 +595,7 @@ let g:floaterm_keymap_toggle = '<F10>'
 " fix the most annoying bug that coc has
 silent! au BufEnter,BufRead,BufNewFile * silent! unmap if
 
-let g:coc_global_extensions = ['coc-vimlsp', 'coc-python', 'coc-java', 'coc-rls','coc-texlab' , 'coc-json', 'coc-yank', 'coc-gitignore', 'coc-git', 'coc-explorer']
+let g:coc_global_extensions = ['coc-vimlsp', 'coc-python', 'coc-java', 'coc-rls', 'coc-json', 'coc-yank', 'coc-gitignore', 'coc-git', 'coc-explorer']
 
 " use <tab> for trigger completion and navigate to the next complete item
 inoremap <silent><expr> <Tab>

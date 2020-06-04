@@ -60,7 +60,7 @@
 		"python",
         "rust",
         "go",
-        "java",
+        "java"
 	],
 	"signature.target": "echo",
 	"signature.enable": true,
@@ -160,7 +160,6 @@
 	"git.topRemovedSign.text": "▔",
 	"git.changeRemovedSign.text": "▒",
 	"git.enableGlobalStatus": false,
-	"html.format.enable": true,
 	"json.format.enable": true,
     "languageserver": {
 		"lua": {
@@ -261,6 +260,6 @@
             }
           }
   },
-  "java.format.settings.url": "/Users/gallon/.config/coc/extensions/node_modules/redhat.java/eclipse-formatter.xml"
+  "java.format.settings.url": "$HOME/.config/coc/extensions/node_modules/redhat.java/eclipse-formatter.xml"
 }
 
