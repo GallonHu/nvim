@@ -57,7 +57,7 @@
 	"list.nextKeymap": "<C-j>",
 	"list.previousKeymap": "<C-k>",
 	"coc.preferences.formatOnSaveFiletypes": [
-		"python",
+        "python",
         "rust",
         "go",
         "java"
@@ -161,6 +161,7 @@
 	"git.changeRemovedSign.text": "▒",
 	"git.enableGlobalStatus": false,
 	"json.format.enable": true,
+    "python.formatting.provider": "autopep8",
     "languageserver": {
 		"lua": {
 			"command": "lua-lsp",

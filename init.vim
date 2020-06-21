@@ -596,6 +596,7 @@ let g:floaterm_keymap_toggle = '<F10>'
 silent! au BufEnter,BufRead,BufNewFile * silent! unmap if
 
 let g:coc_global_extensions = ['coc-vimlsp', 'coc-python', 'coc-java', 'coc-rls', 'coc-json', 'coc-yank', 'coc-gitignore', 'coc-git', 'coc-explorer']
+let g:coc_disable_startup_warning = 1
 
 " use <tab> for trigger completion and navigate to the next complete item
 inoremap <silent><expr> <Tab>
