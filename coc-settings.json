@@ -163,10 +163,6 @@
 	"json.format.enable": true,
     "python.formatting.provider": "autopep8",
     "languageserver": {
-		"lua": {
-			"command": "lua-lsp",
-			"filetypes": ["lua"]
-		},
 		"golang": {
 			"command": "gopls",
 			"rootPatterns": ["go.mod"],
@@ -182,16 +178,6 @@
 			"args": ["start"],
 			"filetypes": ["sh"],
 			"ignoredRootPaths": []
-		},
-		"ccls": {
-			"command": "ccls",
-			"filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
-			"rootPatterns": [".ccls-root", "compile_commands.json"],
-			"initializationOptions": {
-				 "cache": {
-					 "directory": ".ccls-cache"
-				 }
-			 }
 		},
         "python": {
             "command": "python",
