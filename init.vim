@@ -410,11 +410,11 @@ Plug 'airblade/vim-gitgutter'
 Plug 'fatih/vim-go' , { 'for': ['go', 'vim-plug'], 'tag': '*' }
 
 " Rust
-Plug 'rust-lang/rust.vim'
+" Plug 'rust-lang/rust.vim', {'for': 'rust'}
 
 " Python
-Plug 'tmhedberg/SimpylFold', { 'for' :['python', 'vim-plug'] }
-Plug 'tweekmonster/braceless.vim'
+" Plug 'tmhedberg/SimpylFold', { 'for' :['python', 'vim-plug'] }
+" Plug 'tweekmonster/braceless.vim'
 
 " Markdown
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install' }
@@ -595,7 +595,7 @@ let g:floaterm_keymap_toggle = '<F10>'
 " fix the most annoying bug that coc has
 silent! au BufEnter,BufRead,BufNewFile * silent! unmap if
 
-let g:coc_global_extensions = ['coc-vimlsp', 'coc-python', 'coc-java', 'coc-rls', 'coc-json', 'coc-yank', 'coc-gitignore', 'coc-git', 'coc-explorer']
+let g:coc_global_extensions = ['coc-vimlsp', 'coc-rls', 'coc-python', 'coc-java', 'coc-json', 'coc-yank', 'coc-gitignore', 'coc-git', 'coc-explorer']
 let g:coc_disable_startup_warning = 1
 
 " use <tab> for trigger completion and navigate to the next complete item
@@ -639,6 +639,12 @@ nmap ts <Plug>(coc-translator-p)
 
 " coc-markmap
 command! Markmap CocCommand markmap.create
+
+
+" ===============
+" Rust
+" ===============
+let g:rustfmt_autosave = 1
 
 
 " ===============
