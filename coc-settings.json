@@ -179,6 +179,16 @@
 			"filetypes": ["sh"],
 			"ignoredRootPaths": []
 		},
+		"ccls": {
+			"command": "ccls",
+			"filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
+			"rootPatterns": [".ccls-root", "compile_commands.json"],
+			"initializationOptions": {
+				 "cache": {
+					 "directory": ".ccls-cache"
+				 }
+			 }
+		},
         "python": {
             "command": "python",
             "args": [
