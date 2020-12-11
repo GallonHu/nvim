@@ -41,7 +41,6 @@
 		"value": "\uf89f",
 		"variable": "\ue71b"
 	},
-	"diagnostic.signOffset": 9999999,
 	"diagnostic.errorSign": "●",
 	"diagnostic.warningSign": "●",
 	"diagnostic.infoSign": "•",
@@ -59,8 +58,7 @@
 	"coc.preferences.formatOnSaveFiletypes": [
         "python",
         "rust",
-        "go",
-        "java"
+        "go"
 	],
 	"signature.target": "echo",
 	"signature.enable": true,
@@ -179,16 +177,22 @@
 			"filetypes": ["sh"],
 			"ignoredRootPaths": []
 		},
-		"ccls": {
-			"command": "ccls",
-			"filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
-			"rootPatterns": [".ccls-root", "compile_commands.json"],
-			"initializationOptions": {
-				 "cache": {
-					 "directory": ".ccls-cache"
-				 }
-			 }
-		},
+        "ccls": {
+              "command": "ccls",
+              "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"],
+              "rootPatterns": [".ccls", "compile_commands.json", ".git/", ".hg/"],
+              "initializationOptions": {
+                    "cache": {
+                        "directory": "/tmp/ccls"
+                     },
+                     "clang": {
+                         "extraArgs": [
+                             "-isyroot",
+                             "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"
+                         ]
+                     }
+               }
+        },
         "python": {
             "command": "python",
             "args": [
@@ -257,6 +261,5 @@
             }
           }
   },
-  "java.format.settings.url": "$HOME/.config/coc/extensions/node_modules/redhat.java/eclipse-formatter.xml"
 }
 
